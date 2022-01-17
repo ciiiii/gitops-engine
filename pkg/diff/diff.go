@@ -76,6 +76,7 @@ func Diff(config, live *unstructured.Unstructured, opts ...Option) (*DiffResult,
 		o.log.V(1).Info(fmt.Sprintf("Failed to get last applied configuration: %v", err))
 	} else {
 		if orig != nil && config != nil {
+			orig = remarshal(orig, o)
 			Normalize(orig, opts...)
 			dr, err := ThreeWayDiff(orig, config, live)
 			if err == nil {
